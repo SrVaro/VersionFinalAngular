@@ -1,0 +1,139 @@
+  <ng-sidebar-container style="height: 100vh;">
+
+    <!-- A sidebar -->
+    <ng-sidebar  [(opened)]="_opened" position="right" >
+        <form (ngSubmit)="editPJ(editPJForm.value)" [formGroup]="editPJForm" class="barraLateral">
+            <div class="form-row">
+                
+                <input type="hidden" formControlName="id">
+
+                <div class="form-group col-md-6">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" placeholder="Nombre del personaje" formControlName="nombre">
+                </div>
+                    
+                <div class="form-group col-md-6">
+                    <label for="url_img">Imagen</label>
+                    <input type="url" class="form-control" formControlName="url">
+                </div>
+    
+                <div class="form-group col-md-6">
+                    <label for="descripcion">Descripcion:</label>
+                    <textarea  formControlName="descripcion"  class="form-control" > </textarea>
+                </div>
+    
+                <div class="form-group col-md-6">
+                    <label for="cita">Cita:</label>
+                    <input type="text"  class="form-control" formControlName="cita">
+                    <label for="saga">Saga</label>
+                    <input type="text" class="form-control" formControlName="saga">
+                </div>
+    
+    
+                <div class="form-group col-md-12">
+                    <label for="nombre">Mov. Especiales</label>
+                    <br>
+                    <label for="arriba">Arriba</label>
+                    <input type="text" class="form-control" placeholder="Mov. Espacial hacia arriba" formControlName="arriba">
+                    <label for="abajo">Abajo</label>
+                    <input type="text" class="form-control" placeholder="Mov. Espacial hacia abajo" formControlName="abajo">
+    
+                    <label for="izquierda">Lateral</label>
+                    <input type="text" class="form-control" placeholder="Mov. Espacial hacia lateral" formControlName="lateral">
+    
+                    <label for="derecha">Normal</label>
+                    <input type="text" class="form-control" placeholder="Mov. Espacial hacia normal" formControlName="normal">
+    
+                    <br>
+    
+                    <label for="smash">Smash Final</label>
+                    <input type="text" class="form-control" placeholder="Smash final" formControlName="smash">
+                </div>
+    
+                
+    
+                <div class="form-group col-md-6">
+                        <input type="submit"  class="btn btn-primary" [disabled]="!editPJForm.valid" value="Aceptar">
+                        <input type="reset" (click)="_toggleSidebar()"  class="btn btn-danger" value="Cancelar">
+                </div>
+                
+            </div>
+        </form>
+    </ng-sidebar>
+  
+    <!-- Page content -->
+    <div ng-sidebar-content  style="overflow:hidden">
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark barra">
+
+        <a class="navbar-brand" routerLink="/user" *ngIf="logged" >Smash Bros Character Creator</a>
+        
+        <div  class="crearPersonaje"> 
+        <button type="button" class="btn btn-primary" (click)="openModalWithComponent()" *ngIf="logged" [disabled]="editando">Crear un personaje</button>
+        </div>
+        
+        
+        <div>
+            <a class="btn btn-primary cerrarSesion" (click)="logout()" *ngIf="logged" routerLink="/login"> Cerrar Sesion </a>
+        </div>
+        
+        </nav>
+
+      <div class="row" >
+      <div class="col-sm-3"*ngFor="let pj of pjs" >
+        <div class="card-container" >
+         <div class="card" >
+             <div class="front">
+                 <div class="cover">
+                     <img src="../../../assets/theme.jpg"/>
+                 </div>
+                 <div class="user">
+                     <img class="img-circle" [src]="pj.data.url"/>
+                 </div>
+                 <div class="content">
+                     <div class="main">
+                         <h3 class="name">{{pj.data.nombre}}</h3>
+                         <p class="profession">{{pj.data.saga}}</p>
+
+                         <p class="text-center">{{pj.data.descripcion}}</p>
+                     </div>
+                     <div class="footer">
+                         <div class="rating">
+                             <i class="fa fa-mail-forward"></i> Auto rotacion
+                         </div>
+                     </div>
+                 </div>
+             </div> <!-- end front panel -->
+             <div class="back">
+                 <div class="content">
+                     <div class="main">
+                            <h5 class="motto">{{pj.data.cita}}</h5>
+
+                         <h4 class="text-center">Mov. especiales</h4>
+
+                              <p class="text-center"> <img src="../../../assets/flecha.jpg" class="flecha"> {{pj.data.arriba}}</p>
+                              <p class="text-center"> <img src="../../../assets/flecha.jpg" class="flecha"> {{pj.data.abajo}}</p>
+                              <p class="text-center"> <img src="../../../assets/flecha.jpg" class="flecha"> {{pj.data.lateral}}</p>
+                              <p class="text-center"> <img src="../../../assets/flecha.jpg" class="flecha"> {{pj.data.normal}}</p>
+
+                         <h4 class="text-center">Smash Final</h4>
+                              <p class="text-center"> <img src="../../../assets/flecha.jpg" class="flecha"> {{pj.data.smash}}</p>
+
+                        <div class="acciones">
+                            <button class ="btnEliminar" type="button" (click)="deletePJ(pj.id)" class="btn btn-danger">Eliminar</button>
+                            <button type="button" (click)="rellenarFormulario(pj.id)" class="btn btn-success">Editar</button>
+                        </div>
+                    </div>
+
+                    
+
+                  </div>
+             </div> <!-- end back panel -->
+         </div> <!-- end card -->
+     </div> <!-- end card-container -->
+     </div>
+    </div>
+
+    </div>
+  
+  </ng-sidebar-container>

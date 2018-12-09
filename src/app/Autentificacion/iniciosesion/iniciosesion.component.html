@@ -1,0 +1,43 @@
+<div class="contenedorPrincipal">
+
+    <div class="container" *ngIf="inicioAbierto">
+    <form [formGroup]="loginForm">
+      <h3> Inicio sesion </h3>
+      <div class="form-group">
+        <label for="email">Correo electronico</label>
+        <input type="email" formControlName="email" class="form-control" aria-describedby="emailHelp" placeholder="Introduce tu correo electronico" required >
+      </div>
+      <div class="form-group">
+        <label for="password1">Contraseña</label>
+        <input type="password" class="form-control" formControlName="password" placeholder="Contraseña" required>
+        <label class="error">{{errorMessage}}</label>
+        <label class="success">{{successMessage}}</label>
+      </div>
+      <button type="submit" (click)="tryLogin(loginForm.value)" class="btn btn-primary btn-block">Iniciar sesion</button>
+      <button type="button" class="btn btn-danger btn-block" (click)="tryGoogleLogin()">Iniciar sesion con Google</button>  
+      <br>
+      <p> ¿No tienes cuenta? <a (click)="cambiarFormulario()">¡Registrate ahora!</a></p>
+    </form>
+    </div>
+
+    <div class="container" *ngIf="!inicioAbierto">
+      <form [formGroup]="registerForm">
+        <h3> Registro </h3>
+        <div class="form-group">
+          <label for="email">Correo electronico</label>
+          <input type="email" formControlName="email" class="form-control" aria-describedby="emailHelp" placeholder="Introduce tu correo electronico" required >
+          <small id="emailHelp" class="form-text text-muted">No compartiremos tu correo con nadie mas.</small>
+        </div>
+        <div class="form-group">
+          <label for="password1">Contraseña</label>
+          <input type="password" class="form-control" formControlName="password" placeholder="Contraseña" required>
+          <label class="error">{{errorMessage}}</label>
+          <label class="success">{{successMessage}}</label>
+        </div>
+        <button type="submit" (click)="tryRegister(registerForm.value)" class="btn btn-primary btn-block">Registrar</button>
+        <br>
+        <p> ¿Ya tienes una cuenta? <a (click)="cambiarFormulario()">Inicia sesion </a></p>
+      </form>
+    </div>
+   
+  </div>
